@@ -31,6 +31,11 @@ public class PersonController {
         );
     }
 
+    @GetMapping("listForEmployee/{id}")
+    public List<Person> findByEmployeeId(@PathVariable int id) {
+        return this.persons.findByEmployeeId(id);
+    }
+
     @PostMapping("/")
     public ResponseEntity<Person> create(@RequestBody Person person) {
         Person createdPerson = this.persons.create(person);

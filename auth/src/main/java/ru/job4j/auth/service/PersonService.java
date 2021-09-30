@@ -42,4 +42,8 @@ public class PersonService {
         person.setId(id);
         this.persons.delete(person);
     }
+
+    public List<Person> findByEmployeeId(int id) {
+        return persons.findByEmployeeId(id);
+    }
 }
