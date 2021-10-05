@@ -1,7 +1,9 @@
 package ru.job4j.chat.service;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.server.ResponseStatusException;
 import ru.job4j.chat.model.Room;
 import ru.job4j.chat.repository.RoomRepository;
 
@@ -40,5 +42,12 @@ public class RoomService {
         Room room = new Room();
         room.setId(id);
         this.repository.delete(room);
+    }
+
+    public void patch(Room room) {
+        repository.findById(room.getId()).orElseThrow(() -> new ResponseStatusException(
+                HttpStatus.NOT_FOUND, "Room is not found. Please, check id."
+        ));
+        update(room);
     }
 }

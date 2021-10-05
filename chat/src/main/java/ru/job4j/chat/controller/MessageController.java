@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.job4j.chat.model.Message;
+import ru.job4j.chat.model.dto.MessageDTO;
 import ru.job4j.chat.service.MessageService;
 
 import java.util.List;
@@ -30,6 +31,11 @@ public class MessageController {
     @PutMapping("/")
     public void update(@RequestBody Message message) {
         this.service.update(message);
+    }
+
+    @PatchMapping("/")
+    public void patch(@RequestBody MessageDTO dto) {
+        this.service.patch(dto);
     }
 
     @DeleteMapping("/{id}")

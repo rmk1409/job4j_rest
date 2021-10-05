@@ -32,6 +32,11 @@ public class RoomController {
         this.service.update(room);
     }
 
+    @PatchMapping("/")
+    public void patch(@RequestBody Room room) {
+        this.service.patch(room);
+    }
+
     @DeleteMapping("/{id}")
     public void delete(@PathVariable long id) {
         this.service.delete(id);

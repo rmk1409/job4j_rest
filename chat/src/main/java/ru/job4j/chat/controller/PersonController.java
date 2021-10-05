@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import ru.job4j.chat.model.Person;
+import ru.job4j.chat.model.dto.PersonDTO;
 import ru.job4j.chat.service.PersonService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -56,6 +57,11 @@ public class PersonController {
     @PutMapping("/")
     public void update(@RequestBody Person person) {
         this.service.update(person);
+    }
+
+    @PatchMapping("/")
+    public void patch(@RequestBody PersonDTO dto) {
+        this.service.patch(dto);
     }
 
     @DeleteMapping("/{id}")

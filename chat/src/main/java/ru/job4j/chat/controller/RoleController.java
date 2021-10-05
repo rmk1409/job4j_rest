@@ -32,6 +32,11 @@ public class RoleController {
         this.service.update(role);
     }
 
+    @PatchMapping("/")
+    public void patch(@RequestBody Role role) {
+        this.service.patch(role);
+    }
+
     @DeleteMapping("/{id}")
     public void delete(@PathVariable long id) {
         this.service.delete(id);

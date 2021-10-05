@@ -1,7 +1,9 @@
 package ru.job4j.chat.service;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.server.ResponseStatusException;
 import ru.job4j.chat.model.Role;
 import ru.job4j.chat.repository.RoleRepository;
 
@@ -40,5 +42,12 @@ public class RoleService {
         Role role = new Role();
         role.setId(id);
         this.repository.delete(role);
+    }
+
+    public void patch(Role role) {
+        repository.findById(role.getId()).orElseThrow(() -> new ResponseStatusException(
+                HttpStatus.NOT_FOUND, "Role is not found. Please, check id."
+        ));
+        update(role);
     }
 }
