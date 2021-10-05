@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.job4j.chat.model.Role;
 import ru.job4j.chat.service.RoleService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -28,12 +29,12 @@ public class RoleController {
     }
 
     @PutMapping("/")
-    public void update(@RequestBody Role role) {
+    public void update(@Valid @RequestBody Role role) {
         this.service.update(role);
     }
 
     @PatchMapping("/")
-    public void patch(@RequestBody Role role) {
+    public void patch(@Valid @RequestBody Role role) {
         this.service.patch(role);
     }
 

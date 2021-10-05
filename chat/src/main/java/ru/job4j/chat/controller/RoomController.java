@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.job4j.chat.model.Room;
 import ru.job4j.chat.service.RoomService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -28,12 +29,12 @@ public class RoomController {
     }
 
     @PutMapping("/")
-    public void update(@RequestBody Room room) {
+    public void update(@Valid @RequestBody Room room) {
         this.service.update(room);
     }
 
     @PatchMapping("/")
-    public void patch(@RequestBody Room room) {
+    public void patch(@Valid @RequestBody Room room) {
         this.service.patch(room);
     }
 

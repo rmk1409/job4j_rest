@@ -11,6 +11,7 @@ import ru.job4j.chat.service.PersonService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -38,7 +39,7 @@ public class PersonController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<Person> add(@RequestBody Person person) {
+    public ResponseEntity<Person> add(@Valid @RequestBody Person person) {
         return new ResponseEntity<>(this.service.create(person), HttpStatus.CREATED);
     }
 
@@ -55,7 +56,7 @@ public class PersonController {
     }
 
     @PutMapping("/")
-    public void update(@RequestBody Person person) {
+    public void update(@Valid @RequestBody Person person) {
         this.service.update(person);
     }
 

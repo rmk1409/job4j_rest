@@ -7,6 +7,7 @@ import ru.job4j.chat.model.Message;
 import ru.job4j.chat.model.dto.MessageDTO;
 import ru.job4j.chat.service.MessageService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -24,12 +25,12 @@ public class MessageController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<Message> add(@RequestBody Message message) {
+    public ResponseEntity<Message> add(@Valid @RequestBody Message message) {
         return new ResponseEntity<>(this.service.create(message), HttpStatus.CREATED);
     }
 
     @PutMapping("/")
-    public void update(@RequestBody Message message) {
+    public void update(@Valid @RequestBody Message message) {
         this.service.update(message);
     }
 
