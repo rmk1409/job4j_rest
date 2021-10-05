@@ -4,44 +4,36 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.job4j.chat.model.Room;
-import ru.job4j.chat.repository.RoomRepository;
+import ru.job4j.chat.service.RoomService;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @RestController
 @RequestMapping("/room")
 public class RoomController {
-    private final RoomRepository repository;
+    private final RoomService service;
 
-    public RoomController(RoomRepository repository) {
-        this.repository = repository;
+    public RoomController(RoomService service) {
+        this.service = service;
     }
 
     @GetMapping("/")
     public List<Room> findAll() {
-        return StreamSupport.stream(
-                this.repository.findAll().spliterator(), false
-        ).collect(Collectors.toList());
+        return service.findAll();
     }
 
     @PostMapping("/")
     public ResponseEntity<Room> add(@RequestBody Room room) {
-        return new ResponseEntity<>(this.repository.save(room), HttpStatus.CREATED);
+        return new ResponseEntity<>(this.service.create(room), HttpStatus.CREATED);
     }
 
     @PutMapping("/")
-    public ResponseEntity<Void> update(@RequestBody Room room) {
-        this.repository.save(room);
-        return ResponseEntity.ok().build();
+    public void update(@RequestBody Room room) {
+        this.service.update(room);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable long id) {
-        Room room = new Room();
-        room.setId(id);
-        this.repository.delete(room);
-        return ResponseEntity.ok().build();
+    public void delete(@PathVariable long id) {
+        this.service.delete(id);
     }
 }

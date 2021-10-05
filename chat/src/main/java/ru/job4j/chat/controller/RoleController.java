@@ -4,44 +4,36 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.job4j.chat.model.Role;
-import ru.job4j.chat.repository.RoleRepository;
+import ru.job4j.chat.service.RoleService;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @RestController
 @RequestMapping("/role")
 public class RoleController {
-    private final RoleRepository repository;
+    private final RoleService service;
 
-    public RoleController(RoleRepository repository) {
-        this.repository = repository;
+    public RoleController(RoleService service) {
+        this.service = service;
     }
 
     @GetMapping("/")
     public List<Role> findAll() {
-        return StreamSupport.stream(
-                this.repository.findAll().spliterator(), false
-        ).collect(Collectors.toList());
+        return service.findAll();
     }
 
     @PostMapping("/")
     public ResponseEntity<Role> add(@RequestBody Role role) {
-        return new ResponseEntity<>(this.repository.save(role), HttpStatus.CREATED);
+        return new ResponseEntity<>(this.service.create(role), HttpStatus.CREATED);
     }
 
     @PutMapping("/")
-    public ResponseEntity<Void> update(@RequestBody Role role) {
-        this.repository.save(role);
-        return ResponseEntity.ok().build();
+    public void update(@RequestBody Role role) {
+        this.service.update(role);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable long id) {
-        Role role = new Role();
-        role.setId(id);
-        this.repository.delete(role);
-        return ResponseEntity.ok().build();
+    public void delete(@PathVariable long id) {
+        this.service.delete(id);
     }
 }
